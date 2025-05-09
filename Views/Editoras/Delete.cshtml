@@ -1,0 +1,21 @@
+@model BookSphere.Models.Editora
+
+@{
+    ViewData["Title"] = "Excluir Editora";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<h4>Tem certeza que deseja excluir a editora <strong>@Model.Nome</strong>?</h4>
+
+<div class="mt-3">
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <button type="submit" class="btn btn-danger">
+            <i class="fa fa-trash"></i> Confirmar Exclusão
+        </button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Cancelar</a>
+    </form>
+</div>

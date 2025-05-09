@@ -1,0 +1,117 @@
+@model BookSphere.Models.Livro
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<BookSphere.Models.Usuario> UserManager
+@inject SignInManager<BookSphere.Models.Usuario> SignInManager
+
+@{
+    ViewData["Title"] = "Detalhes do Livro";
+    var urlAnterior = Context.Request.Headers["Referer"].ToString();
+    var urlVoltar = string.IsNullOrEmpty(urlAnterior) ? Url.Action("Index", "Home") : urlAnterior;
+    var user = await UserManager.GetUserAsync(User);
+    var isAdmin = user != null && await UserManager.IsInRoleAsync(user, "Administrador");
+}
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <i class="fa fa-info-circle"></i> @TempData["Mensagem"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<div class="card mb-4">
+    <div class="row g-0">
+        <div class="col-md-4">
+            @if (!string.IsNullOrEmpty(Model.CapaUrl))
+            {
+                <img src="@Model.CapaUrl" class="img-fluid rounded-start" alt="Capa do livro" style="max-height: 100%; max-width: 100%;" />
+            }
+            else
+            {
+                <div class="text-muted p-3">Capa não disponível</div>
+            }
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Título</dt>
+                    <dd class="col-sm-8">@Model.Titulo</dd>
+
+                    <dt class="col-sm-4">Descrição</dt>
+                    <dd class="col-sm-8">@Model.Descricao</dd>
+
+                    <dt class="col-sm-4">Ano de Publicação</dt>
+                    <dd class="col-sm-8">@Model.AnoPublicacao</dd>
+
+                    <dt class="col-sm-4">Páginas</dt>
+                    <dd class="col-sm-8">@Model.Paginas</dd>
+
+                    <dt class="col-sm-4">ISBN</dt>
+                    <dd class="col-sm-8">@Model.ISBN</dd>
+
+                    <dt class="col-sm-4">Quantidade Disponível</dt>
+                    <dd class="col-sm-8">@Model.QuantidadeDisponivel</dd>
+
+                    <dt class="col-sm-4">Disponível</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.Disponivel)
+                        {
+                            <span class="badge bg-success">Sim</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Não</span>
+                        }
+                    </dd>
+
+                    <dt class="col-sm-4">Autor</dt>
+                    <dd class="col-sm-8">@Model.Autor?.Nome</dd>
+
+                    <dt class="col-sm-4">Editora</dt>
+                    <dd class="col-sm-8">@Model.Editora?.Nome</dd>
+
+                    <dt class="col-sm-4">Categoria</dt>
+                    <dd class="col-sm-8">@Model.Categoria?.Nome</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    @if (isAdmin)
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+            <i class="fa fa-edit"></i> Editar
+        </a>
+    }
+    <a href="@urlVoltar" class="btn btn-secondary ms-2">
+        <i class="fa fa-arrow-left"></i> Voltar
+    </a>
+</div>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="mt-3">
+        @if ((bool)(ViewBag.EhFavorito ?? false))
+        {
+            <form asp-controller="Favoritos" asp-action="Remover" method="post" class="d-inline">
+                <input type="hidden" name="livroId" value="@Model.Id" />
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-heart-broken"></i> Remover dos Favoritos
+                </button>
+            </form>
+        }
+        else
+        {
+            <form asp-controller="Favoritos" asp-action="Adicionar" method="post" class="d-inline">
+                <input type="hidden" name="livroId" value="@Model.Id" />
+                <button type="submit" class="btn btn-outline-danger">
+                    <i class="fas fa-heart"></i> Adicionar aos Favoritos
+                </button>
+            </form>
+        }
+    </div>
+}

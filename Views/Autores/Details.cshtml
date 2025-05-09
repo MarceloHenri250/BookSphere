@@ -1,0 +1,27 @@
+@model BookSphere.Models.Autor
+
+@{
+    ViewData["Title"] = "Detalhes do Autor";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="mb-3">
+                <strong>Nome:</strong>
+                <p>@Model.Nome</p>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Editar
+                </a>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

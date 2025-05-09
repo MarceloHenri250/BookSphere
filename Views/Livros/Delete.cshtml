@@ -1,0 +1,37 @@
+@model BookSphere.Models.Livro
+
+@{
+    ViewData["Title"] = "Excluir Livro";
+}
+
+<h2>Excluir Livro</h2>
+<hr />
+
+<div class="alert alert-warning" role="alert">
+    <i class="fa fa-exclamation-triangle"></i> Você está prestes a excluir o livro <strong>@Model.Titulo</strong>. Esta ação não pode ser desfeita.
+</div>
+
+<h4>Tem certeza que deseja excluir este livro?</h4>
+
+<dl class="row">
+    <dt class="col-sm-3">Autor</dt>
+    <dd class="col-sm-9">@Model.Autor?.Nome</dd>
+
+    <dt class="col-sm-3">Editora</dt>
+    <dd class="col-sm-9">@Model.Editora?.Nome</dd>
+
+    <dt class="col-sm-3">Categoria</dt>
+    <dd class="col-sm-9">@Model.Categoria?.Nome</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">
+            <i class="fa fa-trash"></i> Confirmar Exclusão
+        </button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">
+            <i class="fa fa-arrow-left"></i> Cancelar
+        </a>
+    </div>
+</form>

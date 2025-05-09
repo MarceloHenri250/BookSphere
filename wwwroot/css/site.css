@@ -1,0 +1,138 @@
+/* ==========================
+  Estilos Gerais
+  ========================== */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f7fc;
+  color: #333;
+}
+
+header {
+  background-color: #6a1b9a; 
+}
+
+.container {
+  margin-top: 20px;
+}
+
+/* ==========================
+  Navbar
+  ========================== */
+.navbar {
+  border-bottom: 3px solid #fdd835; 
+}
+
+.navbar-nav .nav-link {
+  color: #fff !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #fdd835 !important;
+}
+
+.navbar-brand {
+  color: #fdd835 !important;
+  font-weight: bold;
+}
+
+/* ==========================
+  Footer
+  ========================== */
+footer {
+  background-color: #333;
+  color: #fff;
+}
+
+footer .container {
+  font-size: 14px;
+}
+
+/* ==========================
+  Estilos de Tabelas
+  ========================== */
+table {
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+th {
+  background-color: #6a1b9a;
+  color: #fff;
+}
+
+td, th {
+  padding: 12px 15px;
+}
+
+table tbody tr:hover {
+  background-color: #f0e6f7;
+}
+
+/* ==========================
+  Formulários
+  ========================== */
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+select {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 14px;
+}
+
+button, .btn {
+  background-color: #6a1b9a;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+button:hover, .btn:hover {
+  background-color: #fdd835;
+  color: #333;
+}
+
+/* ==========================
+  Mensagens de Erro e Sucesso
+  ========================== */
+.alert {
+  border-radius: 8px;
+}
+
+/* ==========================
+  Estilos do Perfil
+  ========================== */
+.profile-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-card h3 {
+  color: #6a1b9a;
+}
+
+.profile-card .btn {
+  background-color: #fdd835;
+  color: #6a1b9a;
+}
+
+.profile-card .btn:hover {
+  background-color: #6a1b9a;
+  color: #fff;
+}
+
+/* ==========================
+  Estilos de Cartões
+  ========================== */
+.card {
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}

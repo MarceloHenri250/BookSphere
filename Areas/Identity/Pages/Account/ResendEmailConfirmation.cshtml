@@ -1,0 +1,58 @@
+﻿@page
+@model ResendEmailConfirmationModel
+@{
+    ViewData["Title"] = "Reenviar confirmação de e-mail";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card bg-dark text-white shadow rounded border-0">
+                <div class="card-header text-center">
+                    <h2 class="mb-0">@ViewData["Title"]</h2>
+                </div>
+                <div class="card-body">
+                    <h5 class="text-center mb-4">Digite seu e-mail para reenviar a confirmação</h5>
+
+                    <form method="post">
+                        <div asp-validation-summary="All" class="text-danger mb-3" role="alert"></div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Email" class="form-control" aria-required="true" placeholder="nome@exemplo.com" />
+                            <label asp-for="Input.Email" class="form-label">Email</label>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="w-100 btn btn-lg btn-outline-light">Reenviar</button>
+                    </form>
+
+                    @if (ViewData.ModelState.IsValid && !string.IsNullOrEmpty(Model.Input?.Email))
+                    {
+                        <div class="alert alert-success mt-4 text-center" role="alert">
+                            Se o e-mail estiver registrado, uma nova confirmação foi enviada. <br />
+                            Você será redirecionado para a <strong>Home</strong> em instantes...
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <a href="/" class="btn btn-light">Ir para Home agora</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const alert = document.querySelector(".alert-success");
+            if (alert) {
+                setTimeout(() => {
+                    window.location.href = "/Home";
+                }, 5000);
+            }
+        });
+    </script>
+}

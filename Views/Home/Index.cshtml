@@ -1,0 +1,137 @@
+﻿@model IEnumerable<BookSphere.Models.Livro>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<BookSphere.Models.Usuario> UserManager
+
+@{
+    ViewData["Title"] = "Página Inicial";
+    var email = User.Identity?.Name;
+    var livrosFavoritadosIds = ViewBag.Favoritos as List<int> ?? new List<int>();
+    var categorias = ViewBag.Categorias as List<BookSphere.Models.Categoria> ?? new();
+    var autores = ViewBag.Autores as List<BookSphere.Models.Autor> ?? new();
+    var editoras = ViewBag.Editoras as List<BookSphere.Models.Editora> ?? new();
+}
+
+<div class="text-center mt-5">
+    <h1 class="display-4">Bem-vindo ao BookSphere!</h1>
+    <p>Explore nossa coleção de livros e adicione aos seus favoritos.</p>
+
+    @if (TempData["Mensagem"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            <i class="fa fa-check-circle"></i> @TempData["Mensagem"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+        </div>
+    }
+</div>
+
+<div class="container mt-4">
+    <form method="get" asp-controller="Home" asp-action="Index" class="row g-3 mb-4">
+        <div class="col-md-3">
+            <input type="text" name="busca" class="form-control" placeholder="Buscar por título, autor ou categoria..." />
+        </div>
+
+        <div class="col-md-2">
+            <select name="categoriaId" class="form-select">
+                <option value="">Todas as Categorias</option>
+                @foreach (var categoria in categorias)
+                {
+                    <option value="@categoria.Id">@categoria.Nome</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <select name="autorId" class="form-select">
+                <option value="">Todos os Autores</option>
+                @foreach (var autor in autores)
+                {
+                    <option value="@autor.Id">@autor.Nome</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <select name="editoraId" class="form-select">
+                <option value="">Todas as Editoras</option>
+                @foreach (var editora in editoras)
+                {
+                    <option value="@editora.Id">@editora.Nome</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-1">
+            <select name="ordem" class="form-select">
+                <option value="az">A-Z</option>
+                <option value="za">Z-A</option>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fas fa-filter"></i> Filtrar
+            </button>
+        </div>
+    </form>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            Não há livros disponíveis no momento.
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var livro in Model)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 shadow rounded border-0">
+                        @if (!string.IsNullOrEmpty(livro.CapaUrl))
+                        {
+                            <img src="@livro.CapaUrl" class="img-fluid rounded-top" style="height: 180px; object-fit: cover; width: 100%;" alt="Capa do livro" />
+                        }
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@livro.Titulo</h5>
+                            <p class="card-text"><i class="fas fa-user"></i> @livro.Autor?.Nome</p>
+                            <p class="card-text"><i class="fas fa-bookmark"></i> @livro.Categoria?.Nome</p>
+
+                            <div class="mt-auto">
+                                <a asp-controller="Livros" asp-action="Details" asp-route-id="@livro.Id" class="btn btn-info btn-sm mb-1 w-100">
+                                    <i class="fas fa-eye"></i> Detalhes
+                                </a>
+
+                                @if (User.Identity?.IsAuthenticated ?? false)
+                                {
+                                    <form asp-controller="Favoritos" asp-action="Adicionar" method="post">
+                                        <input type="hidden" name="livroId" value="@livro.Id" />
+                                        <button type="submit" class="btn btn-outline-danger btn-sm w-100">
+                                            <i class="fas fa-heart"></i> Favoritar
+                                        </button>
+                                    </form>
+
+                                    @if (livrosFavoritadosIds.Contains(livro.Id))
+                                    {
+                                        <small class="text-danger d-block mt-1"><i class="fas fa-heart"></i> Já favoritado</small>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        setTimeout(function () {
+            var alert = document.querySelector(".alert");
+            if (alert) {
+                var bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                bsAlert.close();
+            }
+        }, 4000);
+    </script>
+}

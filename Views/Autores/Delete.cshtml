@@ -1,0 +1,28 @@
+@model BookSphere.Models.Autor
+
+@{
+    ViewData["Title"] = "Excluir Autor";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">@ViewData["Title"]</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="mb-3">Tem certeza que deseja excluir o autor <strong>@Model.Nome</strong>?</h4>
+
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-trash"></i> Confirmar Exclusão
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fa fa-arrow-left"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+@model IEnumerable<BookSphere.Models.Favorito>
+
+@{
+    ViewData["Title"] = "Meus Favoritos";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">📚 Meus Favoritos</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            Você ainda não favoritou nenhum livro.
+        </div>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped table-hover" id="favoritosTable">
+            <thead class="table-dark">
+                <tr>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Categoria</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var favorito in Model)
+            {
+                <tr>
+                    <td>@favorito.Livro.Titulo</td>
+                    <td>@favorito.Livro.Autor?.Nome</td>
+                    <td>@favorito.Livro.Categoria?.Nome</td>
+                    <td>
+                        <form asp-action="Remover" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@favorito.LivroId" />
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="fas fa-heart-broken"></i> Remover
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#favoritosTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json'
+                }
+            });
+        });
+    </script>
+}

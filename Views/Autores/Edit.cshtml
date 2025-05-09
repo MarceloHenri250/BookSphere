@@ -1,0 +1,44 @@
+@model BookSphere.Models.Autor
+
+@{
+    ViewData["Title"] = "Editar Autor";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+
+    <!-- Formulário de edição do autor -->
+    <form asp-action="Edit" class="needs-validation" novalidate>
+        <!-- Campo oculto para o ID do autor -->
+        <input type="hidden" asp-for="Id" />
+
+        <!-- Campo para o nome do autor -->
+        <div class="mb-3">
+            <label asp-for="Nome" class="form-label">Nome do Autor</label>
+            <input asp-for="Nome" class="form-control" required />
+            
+            <!-- Mensagem de erro caso o campo seja inválido -->
+            <div class="invalid-feedback">
+                @Html.DisplayNameFor(model => model.Nome) é obrigatório.
+            </div>
+            
+            <!-- Exibe qualquer erro de validação -->
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+
+        <!-- Botões de ação -->
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i> Salvar
+            </button>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <!-- Inclui os scripts de validação -->
+    <partial name="_ValidationScriptsPartial" />
+}

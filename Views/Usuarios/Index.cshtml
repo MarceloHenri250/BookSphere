@@ -1,0 +1,75 @@
+@model List<BookSphere.Models.ViewModels.UsuarioComRoleViewModel>
+@using Microsoft.AspNetCore.Identity
+
+@{
+    ViewData["Title"] = "Usuários";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Usuários Cadastrados</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <table class="table table-bordered table-striped table-hover table-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Papel Atual</th>
+                <th>Novo Papel</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usuario in Model)
+            {
+                <tr>
+                    <td>@usuario.Nome</td>
+                    <td>@usuario.Email</td>
+                    <td>
+                        <span class="badge @(usuario.Role == "Administrador" ? "bg-warning" : "bg-secondary")">
+                            @usuario.Role
+                        </span>
+                    </td>
+                    <td>
+                        <form asp-action="AlterarPapel" method="post" class="d-flex align-items-center gap-2">
+                        <input type="hidden" name="userId" value="@usuario.Id" />
+                        <select name="novoPapel" class="form-select">
+                            <option value="Usuario" selected="@("Usuario" == usuario.Role)">Usuario</option>
+                            <option value="Administrador" selected="@("Administrador" == usuario.Role)">Administrador</option>
+                            </select>
+                            <button type="submit" class="btn btn-outline-primary btn-sm">Salvar</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('table').DataTable({
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "Nenhum registro encontrado",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "Nenhum registro disponível",
+                    "infoFiltered": "(filtrado de _MAX_ registros no total)",
+                    "search": "Pesquisar:",
+                    "paginate": {
+                        "first": "Primeiro",
+                        "last": "Último",
+                        "next": "Próximo",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+        });
+    </script>
+}

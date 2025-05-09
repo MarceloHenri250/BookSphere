@@ -1,0 +1,22 @@
+﻿@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "Confirmar E-mail";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Por favor, verifique sua caixa de entrada e clique no link de confirmação enviado para o seu e-mail.</p>
+
+@if (Model.StatusMessage != null)
+{
+    <div class="alert alert-info">
+        @Model.StatusMessage
+    </div>
+}
+
+<p>Se você não recebeu o e-mail, clique no botão abaixo para reenviar.</p>
+
+<form asp-action="ResendConfirmationEmail">
+    <button type="submit" class="btn btn-primary">Reenviar E-mail de Confirmação</button>
+</form>

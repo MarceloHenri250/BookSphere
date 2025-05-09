@@ -1,0 +1,61 @@
+@model BookSphere.Models.ViewModels.MinhaBibliotecaViewModel
+
+@{
+    ViewData["Title"] = "Minha Biblioteca";
+}
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Bem-vindo, @Model.NomeUsuario!</h2>
+
+    <div class="text-center mb-4">
+        <h4 class="fw-semibold">📚 Livros Favoritados</h4>
+    </div>
+
+    @if (Model.Favoritos == null || !Model.Favoritos.Any())
+    {
+        <div class="alert alert-info text-center">
+            Você ainda não favoritou nenhum livro.
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-4">
+            @foreach (var fav in Model.Favoritos)
+            {
+                var livro = fav.Livro;
+                <div class="col">
+                    <div class="card h-100 shadow rounded-4 border-0">
+                        @if (!string.IsNullOrEmpty(livro.CapaUrl))
+                        {
+                            <img src="@livro.CapaUrl"
+                                 alt="Capa de @livro.Titulo"
+                                 class="card-img-top rounded-top-4"
+                                 style="height: 180px; object-fit: cover;" />
+                        }
+
+                        <div class="card-body text-center p-3">
+                            <h6 class="card-title text-truncate fw-bold" title="@livro.Titulo">
+                                @livro.Titulo
+                            </h6>
+                        </div>
+
+                        <div class="card-footer bg-white border-0 px-3 pb-3">
+                            <div class="d-flex flex-column gap-2">
+                                <a asp-controller="Livros" asp-action="Details" asp-route-id="@livro.Id"
+                                   class="btn btn-outline-primary btn-sm w-100">
+                                    Detalhes
+                                </a>
+                                <form asp-controller="Favoritos" asp-action="Remover" method="post">
+                                    <input type="hidden" name="livroId" value="@livro.Id" />
+                                    <button type="submit" class="btn btn-outline-danger btn-sm w-100">
+                                        Desfavoritar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

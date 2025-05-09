@@ -1,0 +1,28 @@
+@model BookSphere.Models.Editora
+
+@{
+    ViewData["Title"] = "Editar Editora";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group mb-3">
+        <label asp-for="Nome" class="form-label" aria-label="Nome da editora"></label>
+        <input asp-for="Nome" class="form-control" aria-describedby="nomeHelp" />
+        <span asp-validation-for="Nome" class="text-danger"></span>
+        <small id="nomeHelp" class="form-text text-muted">Digite o nome da editora.</small>
+    </div>
+
+    <button type="submit" class="btn btn-success" aria-label="Salvar alterações">
+        <i class="fa fa-save"></i> Salvar
+    </button>
+    <a asp-action="Index" class="btn btn-secondary ms-2" aria-label="Voltar à lista de editoras">Voltar</a>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
