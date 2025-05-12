@@ -1,6 +1,6 @@
 # BookSphere
 
-**BookSphere** é uma biblioteca digital projetada para oferecer uma experiência intuitiva e rica, permitindo que os usuários explorem, gerenciem e compartilhem livros de forma eficiente. Ideal para leitores e administradores.
+**BookSphere** é uma biblioteca digital projetada para oferecer uma experiência intuitiva e rica, permitindo que os usuários explorem livros de forma eficiente. Ideal para leitores e administradores.
 
 ---
 
