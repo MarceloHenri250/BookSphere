@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BookSphere")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1ccaddcf784dc8b18251b67813e677a55687ec1b")]
 [assembly: System.Reflection.AssemblyProductAttribute("BookSphere")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BookSphere")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
